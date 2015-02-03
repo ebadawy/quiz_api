@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :quizzes, except: [:new, :edit]
   resources :groups, except: [:new, :edit]
   resources :users, except: [:new, :edit]
   # The priority is based upon order of creation: first created -> highest priority.
