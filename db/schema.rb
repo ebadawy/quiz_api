@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203195908) do
+ActiveRecord::Schema.define(version: 20150203205709) do
 
   create_table "choices", force: :cascade do |t|
     t.string   "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "question_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -38,16 +39,18 @@ ActiveRecord::Schema.define(version: 20150203195908) do
     t.string   "right_answer"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "quiz_id"
   end
 
   create_table "quizzes", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "user_id"
+    t.string   "user_name"
     t.string   "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
