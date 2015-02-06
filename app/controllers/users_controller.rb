@@ -47,6 +47,15 @@ class UsersController < ApplicationController
     head :no_content
   end
 
+  def login
+    @user = User.where(user_params)
+    if(@user.size == 1)
+      render json: @user.first.role
+    else
+      render json: "not found"
+    end
+  end
+
   private
 
     def set_user
