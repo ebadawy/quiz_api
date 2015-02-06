@@ -58,6 +58,7 @@ class UsersController < ApplicationController
   end
 
   def login_get
+    puts "****** #{params}"
     @user = User.where({user_name: params[:user_name], password: params[:password]})
     if(@user.size == 1)
       render json: @user.first.role 
@@ -72,6 +73,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:user_name, :password, :user_result)
+      params.require(:user).permit(:user_name, :password)
     end
 end
