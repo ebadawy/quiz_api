@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204114137) do
+ActiveRecord::Schema.define(version: 20150206090221) do
 
   create_table "choices", force: :cascade do |t|
     t.string   "text"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150204114137) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "user_result"
+    t.string   "role"
   end
 
 end
