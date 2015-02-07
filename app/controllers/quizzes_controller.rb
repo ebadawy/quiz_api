@@ -22,7 +22,6 @@ class QuizzesController < ApplicationController
     questions_arr.each do |i|
       question = Question.new(question_params(i))
       choices_arr(i).each do |j|
-        puts "********#{j}"
         choice = Choice.new(choice_params(j))
         choice.save
         question.choices << choice

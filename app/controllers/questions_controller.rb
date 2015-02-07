@@ -21,9 +21,8 @@ class QuestionsController < ApplicationController
     name = params[:question][:name]
     right_answer = params[:question][:right_answer]
     choices = params[:question][:choices]
+    
     @question = Question.new({name: name, right_answer: right_answer})
-
-    puts "******* #{choices.size}"
 
     choices.each do |i|
       choice = Choice.new({text: i[:text]})
