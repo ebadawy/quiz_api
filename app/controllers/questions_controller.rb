@@ -20,6 +20,12 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
+    choices_arr.each do |i|
+      choice = Choice.new(i.require(:choice).permit(:text))
+      choice.save
+      @question.choices << choice
+    end
+
     if @question.save
       render json: @question, status: :created, location: @question
     else
@@ -55,5 +61,9 @@ class QuestionsController < ApplicationController
 
     def question_params
       params.require(:question).permit(:name, :right_answer)
+    end
+
+    def choices_arr
+      params.require(:choices)
     end
 end
