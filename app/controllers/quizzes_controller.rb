@@ -19,6 +19,16 @@ class QuizzesController < ApplicationController
   # POST /quizzes.json
   def create
     @quiz = Quiz.new(quiz_params)
+    questions_arr.each do |i|
+      question = Question.new(question_params(i))
+      choices_arr(i).each do |j|
+        puts "********#{j}"
+        choice = Choice.new(choice_params(j))
+        choice.save
+        question.choices << choice
+      end
+      @quiz.questions << question
+    end
 
     if @quiz.save
       render json: @quiz, status: :created, location: @quiz
@@ -54,6 +64,25 @@ class QuizzesController < ApplicationController
     end
 
     def quiz_params
-      params.require(:quiz).permit(:name)
+      {name: params[:quiz][:name]}
+    end
+
+    def questions_arr
+      params[:quiz][:questions]
+    end
+
+    def question_params myParam
+      # myParam.permit(:name, :right_answer)
+      {name: myParam[:name], right_answer: myParam[:right_answer]}
+    end
+
+    def choices_arr myParam
+      myParam[:choices]
+    end
+
+    def choice_params myParam
+      # myParam.permit(:text)
+      {text: myParam[:text]}
+      # myParam.require(:choice).permit(:text)
     end
 end
