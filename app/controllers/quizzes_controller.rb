@@ -63,7 +63,8 @@ class QuizzesController < ApplicationController
     end
 
     def quiz_params
-      {name: params[:quiz][:name]}
+      {name: params[:quiz][:name], deadline: params[:quiz][:deadline], 
+      time_limit: params[:quiz][:time_limit], quiz_mark: params[:quiz][:quiz_mark], }
     end
 
     def questions_arr
