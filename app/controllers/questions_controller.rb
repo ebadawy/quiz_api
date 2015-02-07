@@ -18,10 +18,15 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    @question = Question.new(question_params)
+    name = params[:question][:name]
+    right_answer = params[:question][:right_answer]
+    choices = params[:question][:choices]
+    @question = Question.new({name: name, right_answer: right_answer})
 
-    choices_arr.each do |i|
-      choice = Choice.new(i.require(:choice).permit(:text))
+    puts "******* #{choices.size}"
+
+    choices.each do |i|
+      choice = Choice.new({text: i[:text]})
       choice.save
       @question.choices << choice
     end
