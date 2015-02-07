@@ -47,27 +47,12 @@ class UsersController < ApplicationController
     head :no_content
   end
 
-  def login_post
-    @user = User.where(user_params)
-    puts "***** user_params"
-    if(@user.size == 1)
-      render json: @user.first.role 
-    else
-      render json: "not found"
-    end
-  end
-
-  def login_get
-    puts "****** #{params}"
+  #GET /login
+  def login
     @user = User.where({user_name: params[:user_name], password: params[:password]})
     render json: @user.first, status: 200, location: @user.first
-
-    # if(@user.size == 1)
-    #   render json: @user.first.role 
-    # else
-    #   render json: "not found"
-    # end
   end
+
   private
 
     def set_user
