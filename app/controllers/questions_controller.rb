@@ -64,6 +64,6 @@ class QuestionsController < ApplicationController
     end
 
     def choices_arr
-      params.require(:choices)
+      params.require(:question).permit(:choices)
     end
 end
