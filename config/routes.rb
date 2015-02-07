@@ -1,32 +1,36 @@
 Rails.application.routes.draw do
   resources :choices, except: [:new, :edit]
+
   resources :questions do
     resources :choices
   end
+  
   resources :quizzes do
     resources :questions
   end
+  
   resources :groups do
     resources :users
   end
+  
   resources :users do
     resources :groups
     resources :quizzes
   end
   
-  get "login" => "users#login_get"
+  get "login" => "users#login"
   
-  get "users/:group_name" => "users#show_groups"
-  post "users/:group_name" => "users#add_group"
+  # get "users/:group_name" => "users#show_groups"
+  # post "users/:group_name" => "users#add_group"
   
-  get "groups/:user_name" => "users#show_users"
-  post "groups/:user_name" => "users#add_user"
+  # get "groups/:user_name" => "users#show_users"
+  # post "groups/:user_name" => "users#add_user"
   
-  get "quizzes/:name" => "users#show_quizzes"
-  post "quizzes/:name" => "users#add_quiz"
+  # get "quizzes/:name" => "users#show_quizzes"
+  # post "quizzes/:name" => "users#add_quiz"
   
-  get "users/:group_name" => "users#show_groups"
-  post "users/:group_name" => "users#add_group"
+  # get "users/:group_name" => "users#show_groups"
+  # post "users/:group_name" => "users#add_group"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
