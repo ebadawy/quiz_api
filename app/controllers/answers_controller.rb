@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   # GET /answers
   # GET /answers.json
   def index
-    @answers = Answer.where(join_ids)
+    @answers = Answer.where(url_params)
 
     render json: @answers
   end
@@ -22,6 +22,7 @@ class AnswersController < ApplicationController
 
     if @answer.save
       render json: @answer, status: :created, location: @answer
+
     else
       render json: @answer.errors, status: :unprocessable_entity
     end
@@ -54,14 +55,15 @@ class AnswersController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer).permit(:answer, :corrent).join(join_ids)
+      { answer: params[:answer],
+        correct: params[:answer] == (Question.find(params[:question_id]).right_answer)}.merge url_params
     end
 
-    def join_ids
-      puts "*****#{params[:user_id]}"
-      puts "*****#{params[:quiz_id]}"
-      puts "*****#{params[:question_id]}"
-      {user_id: params[:user_id],
-       quiz_id: params[:quiz_id], question_id: params[:question_id]}
+    def url_params
+      h = {user_id: params[:user_id],
+      quiz_id: params[:quiz_id]}
+      if  params[:question_id]
+        h.merge question_id: params[:question_id]
+      end
     end
 end
