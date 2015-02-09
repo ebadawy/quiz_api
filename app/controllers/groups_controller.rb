@@ -20,6 +20,10 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
 
+    if params[:user_id]
+      @group.users << user.find(params[:user_id])
+    end
+
     if @group.save
       render json: @group, status: :created, location: @group
     else
@@ -32,7 +36,13 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
 
-    if @group.update(group_params)
+    if params[:action] == "add"
+      @group.users << User.find(params[:user_id])
+    elsif params[:action] == "delete"
+      @group.users.destroy User.find(params[:user_id])
+    end
+
+    if @group.save
       head :no_content
     else
       render json: @group.errors, status: :unprocessable_entity
@@ -46,6 +56,7 @@ class GroupsController < ApplicationController
 
     head :no_content
   end
+
 
   private
 
