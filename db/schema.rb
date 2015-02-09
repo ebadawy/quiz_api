@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208085025) do
+ActiveRecord::Schema.define(version: 20150209133832) do
+
+  create_table "answers", force: :cascade do |t|
+    t.string   "answer"
+    t.boolean  "corrent"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.integer  "quiz_id"
+    t.integer  "question_id"
+  end
 
   create_table "choices", force: :cascade do |t|
     t.string   "text"
@@ -51,6 +61,12 @@ ActiveRecord::Schema.define(version: 20150208085025) do
     t.string   "time_limit"
     t.integer  "quiz_mark"
     t.boolean  "published"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

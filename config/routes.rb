@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :answers, except: [:new, :edit]
+  resources :results, except: [:new, :edit]
   resources :choices, except: [:new, :edit]
 
   resources :questions do
@@ -14,10 +16,14 @@ Rails.application.routes.draw do
   resources :groups do
     resources :users
   end
-  
+# /users/:user_id/quizzes/:quiz_id/questions/:question_id/answer  
   resources :users do
     resources :groups
-    resources :quizzes
+    resources :quizzes do
+      resources :questions do
+        resources :answers
+      end
+    end
   end
   
   get "login" => "users#login"
