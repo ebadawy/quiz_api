@@ -54,6 +54,6 @@ class ResultsController < ApplicationController
     end
 
     def result_params
-      params[:result]
+      params.require(:result).permit(:result, :user_id, :quiz_id)
     end
 end

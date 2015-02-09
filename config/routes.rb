@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :answers, except: [:new, :edit]
   resources :results, except: [:new, :edit]
+  resources :answers, except: [:new, :edit]
   resources :choices, except: [:new, :edit]
 
   resources :questions do
@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :questions do
         resources :answers
       end
+      resources :results
     end
   end
   
