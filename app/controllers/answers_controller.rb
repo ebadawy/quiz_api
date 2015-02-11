@@ -5,7 +5,9 @@ class AnswersController < ApplicationController
   # GET /answers.json
   def index
     @answers = Answer.where(url_params)
-
+    if @answers.size == 1
+      @answers.first!
+    end
     render json: @answers
   end
 
@@ -19,10 +21,11 @@ class AnswersController < ApplicationController
   # POST /answers.json
   def create
     @answer = Answer.new(answer_params)
-
     if @answer.save
+      if @answer.correct
+        update_result
+      end
       render json: @answer, status: :created, location: @answer
-
     else
       render json: @answer.errors, status: :unprocessable_entity
     end
@@ -49,6 +52,17 @@ class AnswersController < ApplicationController
   end
 
   private
+
+    def update_result
+      currnet_quiz = Quize.find(params[:quiz_id]) 
+      quiz_mark = currnet_quiz.quiz_mark
+      question_no = currnet_quiz.questions.size
+      question_weight = quiz_mark / question_no
+      rslt = Result.where({user_id: params[:user_id], quiz_id: params[:quiz_id]}).first
+      old_rslt = rslt.result
+      rslt.result = old_rslt + questions_weight
+      rslt.save
+    end
 
     def set_answer
       @answer = Answer.find(params[:id])
