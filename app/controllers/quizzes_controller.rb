@@ -4,8 +4,12 @@ class QuizzesController < ApplicationController
   # GET /quizzes
   # GET /quizzes.json
   def index
-    @quizzes = Quiz.all
-
+    role = User.fint(params[:user_id]).role
+    if role == "doc"
+      @quizzes = Quiz.all
+    elsif
+      @quizzes = Quiz.where({published: true})
+    end
     render json: @quizzes
   end
 
