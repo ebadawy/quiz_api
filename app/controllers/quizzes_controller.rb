@@ -4,7 +4,7 @@ class QuizzesController < ApplicationController
   # GET /quizzes
   # GET /quizzes.json
   def index
-    role = User.fint(params[:user_id]).role
+    role = User.find(params[:user_id]).role
     if role == "doc"
       @quizzes = Quiz.all
     elsif
