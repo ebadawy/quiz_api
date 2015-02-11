@@ -1,11 +1,11 @@
 class ResultsController < ApplicationController
   before_action :set_result, only: [:show, :update, :destroy]
 
-  # GET /results
+  # GET /users/:user_id/quizzes/:quiz_id/results
   # GET /results.json
   def index
     @results = Result.where({user_id: params[:user_id],
-      quiz_id: params[:quiz_id]})
+      quiz_id: params[:quiz_id]}).first
 
     render json: @results
   end
