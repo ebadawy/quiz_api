@@ -4,7 +4,15 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:role] == "student"
+    if params[:quiz_id]
+      users = User.where(role: "student")
+      @users = []
+      user.each do |u|
+        if Result.where(user_id: u.id, quiz_id: params[:quiz_id]).size > 0
+          @users << u
+        end
+      end
+    elsif params[:role] == "student"
       @users = User.where(role: "student")
     else
       @users = User.all
