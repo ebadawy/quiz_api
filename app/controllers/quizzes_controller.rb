@@ -6,9 +6,7 @@ class QuizzesController < ApplicationController
   def index
     current_user = User.find(params[:user_id])
     role = current_user.role
-
     if role == "doc"
-
       @quizzes = Quiz.all
     else
       if params["status"]
@@ -73,6 +71,16 @@ class QuizzesController < ApplicationController
     @quiz.destroy
 
     head :no_content
+  end
+
+  # /graph
+  def quiz_and_result
+    @quizzes = User.find(params[:user_id]).quizzes
+    @results = []
+    @quizzes.each do |q|
+      @results << Result.where({user_id: params[:user_id], quiz_id: q.id}).first
+    end
+    render json: [@quizzes, @results], status: 200, location: @quiz
   end
 
   private

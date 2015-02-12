@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   
   get "login" => "users#login"
   patch "publish" => "results#update_results_status"
+  get "graph" => "quizzes#quiz_and_result"
   
   # get "users/:group_name" => "users#show_groups"
   # post "users/:group_name" => "users#add_group"
