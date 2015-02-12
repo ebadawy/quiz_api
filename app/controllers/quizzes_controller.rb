@@ -4,12 +4,26 @@ class QuizzesController < ApplicationController
   # GET /quizzes
   # GET /quizzes.json
   def index
-    role = User.find(params[:user_id]).role
+    current_user = User.find(params[:user_id])
+    role = current_user.role
+
     if role == "doc"
+
       @quizzes = Quiz.all
-    elsif
-      @quizzes = Quiz.where({published: true})
+    else
+      if params["status"]
+        quizzes = []
+        Quiz.where({published: true}).each do |q|
+          if Result.where({user_id: current_user.id, quiz_id: q.id}).size != 0
+            quizzes << q
+          end
+        end
+        @quizzes = quizzes
+      else
+        @quizzes = Quiz.where({published: true})
+      end
     end
+
     render json: @quizzes
   end
 
