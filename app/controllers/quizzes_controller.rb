@@ -56,10 +56,11 @@ class QuizzesController < ApplicationController
 
   # PATCH/PUT /quizzes/1
   # PATCH/PUT /quizzes/1.json
+  # for updateing the published attr only
   def update
     @quiz = Quiz.find(params[:id])
 
-    if @quiz.update(quiz_params)
+    if @quiz.update(published: true)
       head :no_content
     else
       render json: @quiz.errors, status: :unprocessable_entity
