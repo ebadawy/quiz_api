@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
   
   get "login" => "users#login"
+  patch "publish" => "results#update_results_status"
   
   # get "users/:group_name" => "users#show_groups"
   # post "users/:group_name" => "users#add_group"

@@ -4,8 +4,13 @@ class ResultsController < ApplicationController
   # GET /users/:user_id/quizzes/:quiz_id/results
   # GET /results.json
   def index
-    @results = Result.where({user_id: params[:user_id],
-      quiz_id: params[:quiz_id]}).first
+    if User.find(params[:user_id]).role == "doc"
+      @results = Result.where({user_id: params[:user_id],
+        quiz_id: params[:quiz_id]}).first
+    else
+      @results = Result.where({user_id: params[:user_id],
+        quiz_id: params[:quiz_id], published: true}).first
+    end
 
     render json: @results
   end
@@ -37,6 +42,12 @@ class ResultsController < ApplicationController
       head :no_content
     else
       render json: @result.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update_quiz_status
+    Result.where(params[:quiz_id]).each do |r|
+      r.update(publised: params[:result_status])
     end
   end
 
