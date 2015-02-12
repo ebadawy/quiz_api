@@ -4,8 +4,12 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
+    if params[:role] == "student"
+      @users = User.where(role: "student")
+    else
+      @users = User.all
+    end
+    
     render json: @users
   end
 
