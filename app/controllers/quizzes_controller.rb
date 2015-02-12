@@ -60,7 +60,7 @@ class QuizzesController < ApplicationController
   def update
     @quiz = Quiz.find(params[:id])
 
-    if @quiz.update(published: true)
+    if @quiz.update(published: params[:quiz_status])
       head :no_content
     else
       render json: @quiz.errors, status: :unprocessable_entity
