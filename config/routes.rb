@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :questions do
       resources :choices
     end
+    resources :users
   end
   
   resources :groups do
