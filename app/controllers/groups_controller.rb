@@ -50,6 +50,11 @@ class GroupsController < ApplicationController
     end
   end
 
+  def delete_group_by_name
+    Group.find_by_name(params[:group_name]).destroy        
+    head :no_content
+  end
+
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy

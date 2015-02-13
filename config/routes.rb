@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get "login" => "users#login"
   patch "publish" => "results#update_results_status"
   get "graph" => "quizzes#quiz_and_result"
+
+  delete "destroy_group" => "groups#delete_group_by_name"
   
   # get "users/:group_name" => "users#show_groups"
   # post "users/:group_name" => "users#add_group"
