@@ -4,7 +4,8 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+
+    @groups = User.find(params[:user_id]).groups
 
     render json: @groups
   end
