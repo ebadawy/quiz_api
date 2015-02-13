@@ -34,13 +34,15 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
+  # PATCH/PUT /users/{user_id}/groups/{group_id}
+  # Add/Delete stuednt to the group
   def update
     @group = Group.find(params[:id])
 
     if params[:action] == "add"
-      @group.users << User.find(params[:user_id])
+      @group.users << User.find_by_user_name(params[:user_name])
     elsif params[:action] == "delete"
-      @group.users.destroy User.find(params[:user_id])
+      @group.users.destroy User.find_by_user_name(params[:user_name])
     end
 
     if @group.save
