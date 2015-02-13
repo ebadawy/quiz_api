@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if params[:quiz_id]
       users = User.where(role: "student")
       @users = []
-      user.each do |u|
+      users.each do |u|
         if Result.where(user_id: u.id, quiz_id: params[:quiz_id]).size > 0
           @users << u
         end
