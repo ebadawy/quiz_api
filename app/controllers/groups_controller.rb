@@ -66,6 +66,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:group_name, :students_number)
+      {group_name: params[:group_name], students_number: params[:students_number]}
     end
 end
