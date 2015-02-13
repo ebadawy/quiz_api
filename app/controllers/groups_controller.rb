@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
   end
 
   def delete_group_by_name
-    Group.find_by_name(params[:group_name]).destroy        
+    Group.find_by_group_name(params[:group_name]).destroy        
     head :no_content
   end
 
