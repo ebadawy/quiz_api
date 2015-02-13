@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
 
     if params[:user_id]
-      @group.users << user.find(params[:user_id])
+      @group.users << User.find(params[:user_id])
     end
 
     if @group.save
