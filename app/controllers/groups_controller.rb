@@ -39,10 +39,16 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
 
-    if params[:action] == "add"
-      @group.users << User.find_by_user_name(params[:user_name])
-    elsif params[:action] == "delete"
-      @group.users.destroy User.find_by_user_name(params[:user_name])
+    if params[:method] == "add"
+      if @group.users << User.find_by_user_name(params[:user_name])
+        old_no = @group.students_number
+        @group.students_number = old_no + 1
+      end
+    elsif params[:method] == "delete"
+      if @group.users.destroy User.find_by_user_name(params[:user_name])
+        old_no = @group.students_number
+        @group.students_number = old_no - 1
+      end
     end
 
     if @group.save
