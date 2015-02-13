@@ -14,6 +14,8 @@ class UsersController < ApplicationController
       end
     elsif params[:role] == "student"
       @users = User.where(role: "student")
+    elsif params[:group_id]
+      @users = Group.find(params[:group_id]).users
     else
       @users = User.all
     end
