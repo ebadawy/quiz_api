@@ -4,12 +4,7 @@ class ChoicesController < ApplicationController
   # GET /choices
   # GET /choices.json
   def index
-    if params[:quiz_id] and params[:question_id]
-      @choices = Quiz.find(params[:quiz_id]).questions.
-                  find(params[:question_id]).choices
-    else
-      @choices = Choice.all
-    end
+    @choices = Questoin.find(params[:question_id]).choices
     render json: @choices
   end
 
