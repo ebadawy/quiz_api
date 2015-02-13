@@ -80,7 +80,8 @@ class QuizzesController < ApplicationController
     @quizzes.each do |q|
       @results << Result.where({user_id: params[:user_id], quiz_id: q.id}).first
     end
-    render json: {@quizzes, @results}, status: 200, location: @quiz
+    container = {quizzes: @quizzes, results: @results}
+    render json: container, status: 200, location: @quiz
   end
 
   private
