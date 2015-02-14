@@ -14,12 +14,12 @@ class QuizzesController < ApplicationController
         Quiz.where({published: true}).each do |q|
           r =  Result.where({user_id: current_user.id, quiz_id: q.id})
           if r.size != 0
-            quizzes << q.merge(published: r.published)
+            quizzes << q.add_result_status(r.first.published)
           end
         end
         @quizzes = quizzes
       else
-        @quizzes = Quiz.where({result_published: true})
+        @quizzes = Quiz.where({published: true})
       end
     end
 
@@ -74,7 +74,7 @@ class QuizzesController < ApplicationController
     head :no_content
   end
 
-  # /graph
+  # GET /graph
   def quiz_and_result
     @quizzes = User.find(params[:user_id]).quizzes
     @results = []
@@ -82,7 +82,7 @@ class QuizzesController < ApplicationController
       @results << Result.where({user_id: params[:user_id], quiz_id: q.id}).first
     end
     container = {quizzes: @quizzes, results: @results}
-    render json: container, status: 200, location: @quiz
+    render json: container  , status: 200, location: @quiz
   end
 
   private
