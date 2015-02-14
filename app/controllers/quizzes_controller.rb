@@ -12,13 +12,14 @@ class QuizzesController < ApplicationController
       if params["status"]
         quizzes = []
         Quiz.where({published: true}).each do |q|
-          if Result.where({user_id: current_user.id, quiz_id: q.id}).size != 0
-            quizzes << q
+          r =  Result.where({user_id: current_user.id, quiz_id: q.id})
+          if r.size != 0
+            quizzes << q.merge(published: r.published)
           end
         end
         @quizzes = quizzes
       else
-        @quizzes = Quiz.where({published: true})
+        @quizzes = Quiz.where({result_published: true})
       end
     end
 
