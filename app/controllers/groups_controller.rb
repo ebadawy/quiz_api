@@ -5,7 +5,11 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
 
-    @groups = User.find(params[:user_id]).groups
+    groups = User.find(params[:user_id]).groups
+    @groups = []
+    groups.each do |g|
+      @groups << g.add_group_users(g.users)
+    end
 
     render json: @groups
   end
