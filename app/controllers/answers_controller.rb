@@ -20,14 +20,28 @@ class AnswersController < ApplicationController
   # POST /answers
   # POST /answers.json
   def create
-    @answer = Answer.new(answer_params)
-    if @answer.save
-      if @answer.correct
-        update_result
+    if params[:status] == "listOfAnswers"
+      params[:answers].each do |ans|
+        @answer = Answer.new(answer_params(ans))
+        if @answer.save
+          if @answer.correct
+            update_result
+          end
+          render json: @answer, status: :created, location: @answer
+        else
+          render json: @answer.errors, status: :unprocessable_entity
+        end
       end
-      render json: @answer, status: :created, location: @answer
     else
-      render json: @answer.errors, status: :unprocessable_entity
+      @answer = Answer.new(answer_params(params))
+      if @answer.save
+        if @answer.correct
+          update_result
+        end
+        render json: @answer, status: :created, location: @answer
+      else
+        render json: @answer.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -68,9 +82,9 @@ class AnswersController < ApplicationController
       @answer = Answer.find(params[:id])
     end
 
-    def answer_params
-      { answer: params[:answer],
-        correct: params[:answer] == (Question.find(params[:question_id]).right_answer)}.merge url_params
+    def answer_params myParam
+      { answer: myParam[:answer],
+        correct: myParam[:answer] == (Question.find(myParam[:question_id]).right_answer)}.merge url_params
     end
 
     def url_params
