@@ -7,7 +7,13 @@ class QuizzesController < ApplicationController
     current_user = User.find(params[:user_id])
     role = current_user.role
     if role == "doc"
-      @quizzes = Quiz.all
+      @quizzes = []
+      Quiz.where({published: true}).each do |q|
+        r =  Result.where(quiz_id: q.id)
+        if r.size != 0
+          @quizzes << q.add_result_status(r.first.published)
+        end
+      end
     else
       if params["status"]
         quizzes = []
