@@ -8,7 +8,8 @@ class QuizzesController < ApplicationController
     role = current_user.role
     if role == "doc"
       @quizzes = []
-      Quiz.where({published: true}).each do |q|
+      Quiz.all.each do |q|
+      # Quiz.where({published: true}).each do |q|
         r =  Result.where(quiz_id: q.id)
         if r.size != 0
           @quizzes << q.add_result_status(r.first.published)
