@@ -1,6 +1,7 @@
 class Quiz < ActiveRecord::Base
 	has_many :questions
 	belongs_to :user
+	belongs_to :group
 
 	def add_result_status published
 		{id: self.id, name: self.name, user_id: self.user_id,

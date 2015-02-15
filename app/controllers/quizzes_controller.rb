@@ -20,10 +20,13 @@ class QuizzesController < ApplicationController
     else
       if params["status"]
         quizzes = []
+         u = User.find(params[:user_id])
         Quiz.where({published: true}).each do |q|
-          r =  Result.where({user_id: current_user.id, quiz_id: q.id})
-          if r.size != 0
-            quizzes << q.add_result_status(r.first.published)
+          if has_student(q.gropus, u)
+            r =  Result.where({user_id: current_user.id, quiz_id: q.id})
+            if r.size != 0
+              quizzes << q.add_result_status(r.first.published)
+            end
           end
         end
         @quizzes = quizzes
@@ -124,5 +127,14 @@ class QuizzesController < ApplicationController
       # myParam.permit(:text)
       {text: myParam[:text]}
       # myParam.require(:choice).permit(:text)
+    end
+
+    def has_student groups, student
+      rslt = false
+      groups.each do |g|
+        g.users.each do |u|
+          rslt = true if (u.user_name == student)
+      end
+      rslt
     end
 end
