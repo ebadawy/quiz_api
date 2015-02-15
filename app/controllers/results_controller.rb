@@ -45,9 +45,9 @@ class ResultsController < ApplicationController
     end
   end
 
-  def update_quiz_status
+  def update_results_status
     Result.where(params[:quiz_id]).each do |r|
-      r.update(publised: params[:result_status])
+      r.update(published: params[:result_status])
     end
   end
 
