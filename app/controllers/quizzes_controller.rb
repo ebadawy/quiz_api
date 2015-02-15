@@ -12,6 +12,8 @@ class QuizzesController < ApplicationController
         r =  Result.where(quiz_id: q.id)
         if r.size != 0
           @quizzes << q.add_result_status(r.first.published)
+        else 
+        @quizzes << q.add_result_status(false)
         end
       end
     else
