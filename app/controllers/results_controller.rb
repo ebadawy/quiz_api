@@ -46,7 +46,7 @@ class ResultsController < ApplicationController
   end
 
   def update_results_status
-    Result.where(params[:quiz_id]).each do |r|
+    Result.where(quiz_id: params[:quiz_id]).each do |r|
       r.update(published: params[:result_status])
     end
   end
