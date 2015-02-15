@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :quizzes do
       resources :questions do
         resources :answers
+        resources :choices
       end
       resources :answers
       resources :results
@@ -34,6 +35,8 @@ Rails.application.routes.draw do
   get "graph" => "quizzes#quiz_and_result"
 
   delete "destroy_group" => "groups#delete_group_by_name"
+  get "test/:id" => "groups#test"
+
   
   # get "users/:group_name" => "users#show_groups"
   # post "users/:group_name" => "users#add_group"
