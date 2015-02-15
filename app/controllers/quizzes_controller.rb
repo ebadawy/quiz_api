@@ -53,6 +53,7 @@ class QuizzesController < ApplicationController
     end
 
     if @quiz.save
+      User.find(params[:user_id]).quizzes << @quiz
       render json: @quiz, status: :created, location: @quiz
     else
       render json: @quiz.errors, status: :unprocessable_entity
